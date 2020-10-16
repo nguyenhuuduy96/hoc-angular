@@ -1,0 +1,97 @@
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-8 offset-2" *ngIf="publisher">
+      <div class="form-group">
+          <label for="">Tên nhà xuất bản</label>
+          <input type="text" class="form-control" [(ngModel)]="publisher.name" >
+      </div>
+      <div class="form-group">
+          <label for="">Ảnh đại diện</label>
+          <input type="text" class="form-control" [(ngModel)]="publisher.avatar">
+      </div>
+      <div class="form-group">
+          <label for="">Địa chỉ</label>
+          <input type="text" class="form-control" [(ngModel)]="publisher.address">
+      </div>
+      <div class="form-group">
+          <label for="">Mô tả</label>
+          <textarea class="form-control" [(ngModel)]="publisher.description" rows="10"></textarea>
+      </div>
+      <div class="text-center">
+          <button (click)="editForm()" class="btn btn-sm btn-primary"  type="button">Lưu</button>
+          &nbsp;
+          <a routerLink="/" class="btn btn-sm btn-danger">Hủy</a>
+        </div>
+    </div>
+  </div>
+</div> -->
+<div class="container-fluid">
+  <div class="row justify-content-center" style="margin-top: 40px;">
+    <div class="col-8">
+      <div class="jumbotron">
+        <h3>ADD Publisher</h3>
+
+        <div>
+          <form novalidate [formGroup]="createForm" (ngSubmit)="editForm()" *ngIf="publisher">
+          <div class="form-group">
+              <label for="">Tên nhà xuất bản</label>
+              <input type="text" class="form-control" formControlName="name" [(ngModel)]="publisher.name"
+              [ngClass]="{ 'is-invalid': submitted && createForm.controls.name.errors }" required>
+                           
+                <div *ngIf="createForm.controls.name.errors && (createForm.controls.name.dirty || createForm.controls.name.touched)" class="alert alert-danger">
+                  <div class="text-danger" *ngIf="createForm.controls.name.errors.required"  
+                  class="fa fa-times-circle" style="color:firebrick;" >
+                    ko được để trống!</div>
+                  <div class="" class="fa fa-times-circle" style="color:firebrick;"  *ngIf="createForm.controls.name.invalid">
+                      không được có khoảng cach đầu và cuối và kí tự đặc biệt!</div>
+                </div>
+              
+          </div>
+
+          <div class="form-group">
+            <label for="">Ảnh đại diện</label>
+            <input type="text" class="form-control" formControlName="avatar" [(ngModel)]="publisher.avatar" class="form-control" [ngClass]="{ 'is-invalid': submitted && createForm.controls.avatar.errors }">
+              <div *ngIf="createForm.controls.avatar.errors && (createForm.controls.avatar.dirty || createForm.controls.avatar.touched)" class="alert alert-danger">
+                <div class="text-danger" *ngIf="createForm.controls.avatar.errors.required"  
+                class="fa fa-times-circle" style="color:firebrick;" >
+                  ko được để trống!</div>
+                <div class="" class="fa fa-times-circle" style="color:firebrick;"  *ngIf="createForm.controls.avatar.invalid">
+                    không được có khoảng cach đầu và cuối và kí tự đặc biệt!</div>
+              </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">Địa chỉ</label>
+            <input type="text" class="form-control" formControlName="address" [(ngModel)]="publisher.address" class="form-control" [ngClass]="{ 'is-invalid': submitted && createForm.controls.address.errors }">
+            <div *ngIf="createForm.controls.address.errors && (createForm.controls.address.dirty || createForm.controls.address.touched)" class="alert alert-danger">
+                <div class="text-danger" *ngIf="createForm.controls.address.errors.required"  
+                class="fa fa-times-circle" style="color:firebrick;" >
+                  ko được để trống!</div>
+                <div class="" class="fa fa-times-circle" style="color:firebrick;"  *ngIf="createForm.controls.address.invalid">
+                    không được có khoảng cach đầu và cuối và kí tự đặc biệt!</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="">Mô tả</label>
+          <textarea class="form-control" formControlName="description" [(ngModel)]="publisher.description" rows="10"></textarea>
+          <div *ngIf="createForm.controls.description.errors && (createForm.controls.description.dirty || createForm.controls.description.touched)" class="alert alert-danger">
+              <div class="text-danger" *ngIf="createForm.controls.description.errors.required"  
+              class="fa fa-times-circle" style="color:firebrick;" >
+                ko được để trống!</div>
+              
+          </div>
+        </div>
+
+          <div class="form-group">
+              <button [disabled]="loading" class="btn btn-primary">lưu</button>
+              <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+              <a [routerLink]="['/']" class="btn btn-link">Cancel</a>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

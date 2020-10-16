@@ -1,0 +1,74 @@
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand/logo -->
+  <a class="navbar-brand" routerLink="/"><img src="https://www.massey.ac.nz/massey/fms/ITS/Documents/Projects/Windows-10/publisher-2016-icon.png?724FD20792C2086C6E1D23D5C3CCC793"></a>
+  
+  <!-- Links -->
+  <ul class="navbar-nav" class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" routerLink="/">Publisher</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/publisher-add">Add Publisher</a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" routerLink="/publishers/{{Pid}}/add-books">Add book</a>
+    </li>
+  </ul>
+  <form class="form-inline" action="/action_page.php">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search" >
+    <button class="btn btn-success" type="submit">Search</button>
+  </form>
+</nav> 
+<div class="container">
+  <div class="row" *ngIf="publisher">
+      <div class="col-sm-4">
+          <img [src]="publisher.avatar">
+      </div>
+    <div class="col-sm-8">
+        <h1 class="display-4 font-italic">Tác giả: {{publisher.name}}</h1>
+        <p class="lead my-3">Địa chỉ: {{publisher.address}}</p>
+        <p class="lead mb-3">Giới thiệu: {{publisher.description}}</p>
+    </div>
+    
+  </div>
+</div>
+
+<section class="bg-light">
+<div class="container" *ngIf="books != undefined && publisher != undefined"> 
+  <br>
+    <form class="form-inline" action="/action_page.php">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" >
+      
+    </form><br>
+  <div class="row" *ngIf="books ">
+    <div class="col-md-4 mb-4" *ngFor="let b of books">
+      <div class="card shadow border-0 h-100">
+        <a routerLink="#">
+          <img [src]="b.image" class="img-thumbnail" class="card-img-top">
+        </a>
+        <div class="card-body">
+          <h5> <a >Tên sách: {{b.name}}</a></h5>
+          <p class="text-muted card-text">tác giả: {{b.author}}</p>
+          <p class="text-muted card-text">Giá sách: {{b.price}}đ</p>
+          <p class="text-muted card-text">giới thiệu: {{b.detail}}</p>
+          
+          <!-- <a routerLink="/publishers/{{b.id}}/add-books">Tạo mới</a>      -->
+          <!-- <a class="btn btn-danger" (click)="removeBooksr(b.id)">Remove</a> -->
+          <!-- <button (click)="test(Pid,b.id)" title=".">test</button> -->
+          <button (click)="test(Pid,b)" title="." class="btn btn-danger">delete</button>
+          <button routerLink="/publishers/{{Pid}}/edit-books/{{b.id}}" class="btn btn-primary">edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- <div class="row" *ngIf="books != undefined && publisher != undefined">
+  <ul>
+      <li *ngFor="let b of books">{{b.name}} - {{b.price}}</li>
+      <a routerLink="/publishers/{{b.id}}/add-books">Tạo mới</a>  
+    </ul>
+     
+</div> -->
